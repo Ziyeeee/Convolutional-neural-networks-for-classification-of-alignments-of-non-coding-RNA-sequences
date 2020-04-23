@@ -1,0 +1,45 @@
+= Convolutional neural networks for classification of alignments of non-coding RNA sequences
+
+== Requirements
+* dafscnn (packed wit our program)
+
+* python anaconda3(installed biopython, chainer)
+
+== Usage
+[1] Make input file for CNN
+[1.1] runMakeNcRNAMatrix.sh
+
+Usage : runMakeNcRNAMatrix.sh -i <INPUT_FILE> -o <OUTPUT_DIRECTORY>
+
+-i FILE     input file (only fasta format is available)
+-o DIR      output directory
+
+[1.2] AssembleMatrix.py
+
+Usage : AssembleMatrix.py <INPUT_DIRECTORY>
+
+[2] Learn and predict by CNN model
+ 
+
+== Example
+You can demonstrate our program with test data.
+
+% cd /path/to/ncRNACNN/
+% sh runMakeNcRNAMatrix.sh -i ./testdata/6families_sequence.fa -o ./outdir
+% python AssembleMatrix.py ./outdir
+
+- 10 fold Cross-validation
+-> Learn
+% python RNApairClassify.py -d ./outdir/ncRNApair_data.npy -l ./outdir/ncRNApair_label.npy -gl ./outdir/genelabel.txt -v 10 -g=0
+-> Predict
+% python RNApairClassify.py -d ./outdir/ncRNApair_data.npy -l ./outdir/ncRNApair_label.npy -gl ./outdir/genelabel.txt -v 10 -p ./result/validation0/model_epoch-X
+
+- Unknown families validation
+-> Learn
+% python RNApairClassify.py -d ./outdir/ncRNApair_data.npy -l ./outdir/ncRNApair_label.npy -gl ./outdir/genelabel.txt -v 0 -g=0
+-> Predict
+% python RNApairClassify.py -d ./outdir/ncRNApair_data.npy -l ./outdir/ncRNApair_label.npy -gl ./outdir/genelabel.txt -v 0 -p ./result/model_epoch-X
+
+== Reference
+* Aoki, G., Sakakibara, Y. 
+: Convolutional neural networks for classification of alignments of non-coding RNA sequences

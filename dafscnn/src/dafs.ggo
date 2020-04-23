@@ -1,0 +1,60 @@
+# command line options
+
+args "-u"
+
+purpose "DAFS: dual decomposition for simultaneous aligning and folding RNA sequences."
+
+option "refinement"	r "The number of iteration of the iterative refinment"
+       			  int default="0" optional hidden
+option "weight"		w "Weight of the expected accuracy score for secondary structures"
+       			  float default="4.0" optional
+option "eta"		- "Initial step width for the subgradient optimization"
+       			  float default="0.5" optional hidden
+option "max-iter"	m "The maximum number of iteration of the subgradient optimization"
+       			  int default="600" optional
+option "fourway-pct"	f "Weight of four-way PCT"
+       			  float default="0.0" optional hidden
+option "verbose"	v "The level of verbose outputs"
+       			  int default="0" optional
+
+section "Options for alignments"
+
+option "align-model"	a "Alignment model for calcualating matching probablities"
+       			  values="CONTRAlign","ProbCons" default="ProbCons" optional
+option "align-pct"	p "Weight of PCT for matching probabilities"
+       			  float default="0.25" optional hidden
+option "align-th"	u "Threshold for matching probabilities"
+       			  float default="0.01" optional
+# option "use-bpscore"	- "Use BP score"
+#        		  flag on hidden 
+# option "extra"	- "Extra options for PartAlign"
+#      			  string hidden optional
+option "align-aux"	- "Load matching probability matrices from FILENAME"
+       			  string typestr="FILENAME" hidden optional
+
+section "Options for folding"
+
+option "fold-model"	s "Folding model for calculating base-pairing probablities"
+       			  values="Boltzmann","Vienna","CONTRAfold" default="Boltzmann" optional
+option "fold-decoder"   - "Decoder for common secondary structure prediction"
+                          values="Nussinov","IPknot" default="Nussinov" optional hidden
+option "fold-pct"	q "Weight of PCT for base-pairing probabilities"
+       			  float default="0.25" optional hidden
+option "fold-th"	t "Threshold for base-pairing probabilities"
+       			  float default="0.2" optional multiple
+option "gamma"		g "Specify the threshold for base-pairing probabilities by 1/(gamma+1))"
+       			  float optional hidden multiple
+option "no-alifold"	- "No use of RNAalifold for calculating base-pairing probabilities"
+       			  flag off hidden
+option "fold-th1"	T "Threshold for base-pairing probabilities of the conclusive common secondary structures"
+       			  float optional multiple
+option "gamma1"		G "Specify the threshold for base-pairing probabilities of the conclusive common secondary structuresby 1/(gamma+1))"
+       			  float optional hidden multiple
+option "ipknot"		- "Set optimized parameters for IPknot decoding (--fold-decoder=IPknot -g4,8 -G2,4 --bp-update1)"
+       			  flag off
+option "bp-update"	- "Use the iterative update of BPs"
+       			  flag off hidden
+option "bp-update1"	- "Use the iterative update of BPs for the final prediction"
+       			  flag off hidden
+option "fold-aux"	- "Load base-pairing probability matrices from FILENAME"
+       			  string typestr="FILENAME" hidden optional
